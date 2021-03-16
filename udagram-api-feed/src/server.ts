@@ -8,6 +8,7 @@ import {IndexRouter} from './controllers/v0/index.router';
 import bodyParser from 'body-parser';
 import {config} from './config/config';
 import {V0_FEED_MODELS} from './controllers/v0/model.index';
+import ApiGatewayManagementApi from 'aws-sdk/clients/apigatewaymanagementapi';
 const c = config.dev;
 
 (async () => {
@@ -38,11 +39,16 @@ const c = config.dev;
   */
   app.use('/api/v0/', IndexRouter);
 
+  app.get('/health', async (req, res) =>{
+    res.status(200).send(`OK`)
+  })
+  
   // Root URI call
   app.get( '/', async ( req, res ) => {
     res.send( '/api/v0/' );
   } );
 
+ 
 
   // Start the Server
   app.listen( port, () => {
