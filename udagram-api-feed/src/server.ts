@@ -1,4 +1,5 @@
 import cors from 'cors';
+const { v4: uuidv4 } = require('uuid');
 import express from 'express';
 import {sequelize} from './sequelize';
 
