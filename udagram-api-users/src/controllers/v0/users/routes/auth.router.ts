@@ -1,5 +1,5 @@
 import {Router, Request, Response} from 'express';
-
+const { v4: uuidv4 } = require('uuid');
 import {User} from '../models/User';
 import * as c from '../../../../config/config';
 
@@ -53,36 +53,44 @@ router.get('/verification',
     });
 
 router.post('/login', async (req: Request, res: Response) => {
+  let pid = uuidv4();
   const email = req.body.email;
   const password = req.body.password;
-
+  console.log(new Date().toLocaleString() + `: ${pid} - LOGIN for user ${email} requested`);
   if (!email || !EmailValidator.validate(email)) {
+    console.log(new Date().toLocaleString() + `: ${pid} - LOGIN for user ${email} rejected`);
     return res.status(400).send({auth: false, message: 'Email is required or malformed.'});
   }
 
   if (!password) {
+    console.log(new Date().toLocaleString() + `: ${pid} - LOGIN for user ${email} rejected`);
     return res.status(400).send({auth: false, message: 'Password is required.'});
   }
 
   const user = await User.findByPk(email);
   if (!user) {
+    console.log(new Date().toLocaleString() + `: ${pid} - LOGIN for user rejected - no user ${email} `);
     return res.status(401).send({auth: false, message: 'User was not found..'});
   }
 
   const authValid = await comparePasswords(password, user.passwordHash);
 
   if (!authValid) {
+    console.log(new Date().toLocaleString() + `: ${pid} - LOGIN for user ${email} rejected`);
     return res.status(401).send({auth: false, message: 'Password was invalid.'});
   }
 
   const jwt = generateJWT(user);
   res.status(200).send({auth: true, token: jwt, user: user.short()});
+  console.log(new Date().toLocaleString() + `: ${pid} - Finished processing LOGIN for user ${email}`);
 });
 
 
 router.post('/', async (req: Request, res: Response) => {
+  let pid = uuidv4();
   const email = req.body.email;
   const plainTextPassword = req.body.password;
+  console.log(new Date().toLocaleString() + `: ${pid} - LOGIN for user ${email}`);
 
   if (!email || !EmailValidator.validate(email)) {
     return res.status(400).send({auth: false, message: 'Email is missing or malformed.'});
@@ -109,6 +117,7 @@ router.post('/', async (req: Request, res: Response) => {
 
   const jwt = generateJWT(savedUser);
   res.status(201).send({token: jwt, user: savedUser.short()});
+  console.log(new Date().toLocaleString() + `: ${pid} - Finished processing LOGIN for user ${email}`);
 });
 
 router.get('/', async (req: Request, res: Response) => {

@@ -25,10 +25,15 @@ import {V0_USER_MODELS} from './controllers/v0/model.index';
       'X-Access-Token', 'Authorization',
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    origin: config.url,
+    origin: config.dev.url,
   }));
 
   app.use('/api/v0/', IndexRouter);
+
+  // implement a health check for kubernetes
+  app.get('/health', async (req, res) =>{
+    res.status(200).send(`OK`)
+  })
 
   // Root URI call
   app.get( '/', async ( req, res ) => {
@@ -38,7 +43,7 @@ import {V0_USER_MODELS} from './controllers/v0/model.index';
 
   // Start the Server
   app.listen( port, () => {
-    console.log( `server running ${config.url}` );
+    console.log( `server running ${config.dev.url} at port ${port}` );
     console.log( `press CTRL+C to stop server` );
   } );
 })();

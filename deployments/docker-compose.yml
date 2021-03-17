@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  frontend:
+    build:
+        context: ../udagram-frontend
+    image: $DOCKER_USERNAME/udagram-frontend
+    ports:
+      - "8100"
+  udagram-api-feed:
+    build:
+        context: ../udagram-api-feed
+    image: $DOCKER_USERNAME/udagram-api-feed
+    ports:
+      - "8090"
+  udagram-api-users:
+    build:
+        context: ../udagram-api-users
+    image: $DOCKER_USERNAME/udagram-api-users
+    ports:
+        - "8080"
+  udagram-reverseproxy:
+    build:
+        context: ../udagram-reverseproxy
+    image: $DOCKER_USERNAME/udagram-reverseproxy
+    ports:
+        - "8080:8080"
