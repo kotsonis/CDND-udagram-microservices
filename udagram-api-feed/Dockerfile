@@ -18,8 +18,6 @@ COPY .npmrc ./
 # build the source
 RUN npm run build
 
-# Copy app source
-COPY ./www .
 
 # Bind the port that the image will run on
 EXPOSE 8090
