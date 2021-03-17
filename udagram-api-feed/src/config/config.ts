@@ -9,7 +9,7 @@ export const config = {
     "aws_region": process.env.AWS_REGION, //"eu-central-1",
     "aws_profile": process.env.AWS_PROFILE, //"default",
     "aws_media_bucket": process.env.AWS_S3_BUCKET,
-    'url': process.env.URL
+    'url': 'http:\\localhost'
   },
   "prod": {
     "username": "",
