@@ -15,7 +15,7 @@ before_install:
 
 install:
   - ls deployments
-  - docker-compose -f deployments/docker-compose.yml --parallel build 
+  - docker-compose --verbose -f deployments/docker-compose.yml build --parallel
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
