@@ -19,8 +19,8 @@ install:
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin ;
-    docker-compose -f deployements/docker-compose.yaml push ;
+    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ID" --password-stdin ;
+    docker-compose -f deployements/docker-compose.yml push ;
     fi
 
 notifications:
