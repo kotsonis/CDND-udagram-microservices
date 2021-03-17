@@ -14,12 +14,12 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - docker-compose -f deployments/docker-compose.yml build --parallel
+  - docker-compose -f deployments/docker-compose.yml --parallel build 
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin ;
-    docker-compose -f deployements/docker-compose-build.yaml push ;
+    docker-compose -f deployements/docker-compose.yaml push ;
     fi
 
 notifications:
