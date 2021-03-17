@@ -16,7 +16,7 @@ const c = config.dev;
   await sequelize.sync();
 
   const app = express();
-  const port = process.env.PORT || 8100;
+  const port = process.env.PORT || 8090;
 
   app.use(bodyParser.json());
   //CORS Should be restricted
