@@ -15,11 +15,11 @@ before_install:
 
 install:
 
-  - docker-compose --verbose -f deployments/docker-compose.yml build --parallel
+  - docker-compose -f deployments/docker-compose.yml build --parallel
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ID" --password-stdin ;
+    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin ;
     docker-compose -f deployments/docker-compose.yml push ;
     fi
 
