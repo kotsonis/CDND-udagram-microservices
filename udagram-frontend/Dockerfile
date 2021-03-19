@@ -23,7 +23,7 @@ RUN ionic build
 #COPY --from=build /app/www/ /usr/share/nginx/html/
 
 # Bind the port that the image will run on
-EXPOSE 8110
+EXPOSE 8100
 
 # Define the Docker image's behavior at runtime
-CMD ["ionic", "serve", "--port=8110", "--address=0.0.0.0"]
+CMD ["ionic", "serve", "--port=8100", "--address=0.0.0.0"]

@@ -4,10 +4,10 @@ export const config = {
     "username": process.env.POSTGRES_USERNAME,
     "password": process.env.POSTGRES_PASSWD,
     "database": process.env.POSTGRES_DB,
-    "host": process.env.AWS_HOST, // "udagramkotsonisdev.cwapiu3ap1sp.eu-central-1.rds.amazonaws.com",
+    "host": process.env.AWS_HOST,
     "dialect": "postgres",
-    "aws_region": process.env.AWS_REGION, //"eu-central-1",
-    "aws_profile": process.env.AWS_PROFILE, //"default",
+    "aws_region": process.env.AWS_REGION,
+    "aws_profile": process.env.AWS_PROFILE,
     "aws_media_bucket": process.env.AWS_S3_BUCKET,
     'url': 'http:\\localhost'
   },
