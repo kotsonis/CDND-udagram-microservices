@@ -23,5 +23,4 @@ services:
         context: ../udagram-reverseproxy
     image: $DOCKER_USERNAME/udagram-reverseproxy
     ports:
-        - "8080:8080"
-        - "8100:8100"
+        - "8080"
