@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: udagram-api-feed
-  labels:
-    service: udagram-api-feed
 
 spec:
   replicas: 1
@@ -13,12 +11,19 @@ spec:
   template:
     metadata:
       labels:
-        service: udagram-api-feed
+        app: udagram-api-feed
     spec:
       containers:
-      - image: kotsonis/udagram-api-feed
-        name: udagram-api-feed
+      - name: udagram-api-feed
+        image: kamariza/udagram-api-feed
+        ports:
+        - name: http
+          containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: udagram-secrets
         imagePullPolicy: Always          
+
         resources:
           requests:
             memory: "64Mi"
@@ -26,6 +31,19 @@ spec:
           limits:
             memory: "1024Mi"
             cpu: "500m"       
-        ports:
-        - containerPort: 8100
+        
       restartPolicy: Always
+---
+# Service part
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-api
+spec:
+  selector:
+    app: udagram-api-feed
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: http
+  

@@ -1,0 +1,48 @@
+# App deployment part
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    service: frontend
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: frontend
+  template:
+    metadata:
+      labels:
+        service: frontend
+    spec:
+      containers:
+      - image: kamariza/udagram-frontend
+        name: frontend
+        imagePullPolicy: Always          
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"       
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+# Service part
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    service: frontend
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    service: frontend
+  type: LoadBalancer 
