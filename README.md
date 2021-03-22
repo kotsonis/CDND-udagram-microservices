@@ -239,19 +239,15 @@ spec:
 Deploying the apps and services is achieved by running `kubectl apply -f .\deployments\k8s` which applies everything in the directory
 
 #### Autoscaling
-[Kubernetes Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) was set up to allow for scaling our backend api-feed pod when CPU goes over 50%. We set up the HPA on the replication services. 
-1. get replication services with command ```bash kubectl get rs ```
-   ```
-   NAME                              DESIRED   CURRENT   READY   AGE
-   frontend-67b5446965               1         1         1       80m
-   udagram-api-feed-85dfcb97bf       1         1         1       54m
-   udagram-api-users-7c87d97ffc      1         1         1       53m
-   udagram-reverseproxy-6d5b57cbcc   1         1         1       10h
-   ```
-2. set up an HPA for the `udagram-api-feed-85dfcb97bf` replication service
+[Kubernetes Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) was set up to allow for scaling our backend api-feed pod when CPU goes over 50%. 
+Note that HPA does not work out of the box on Amazon EKS clusters. You first need to deploy the [Metrics Server](https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html) to your cluster.
+This can be done with the command:
+```
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+We then set up the HPA on the `udagram-api-feed` deployment as follows:
    ```bash
-   kubectl autoscale rs udagram-api-feed-85dfcb97bf --min=1 --max=2 --cpu-percent=80
-   horizontalpodautoscaler.autoscaling/udagram-api-feed-85dfcb97bf autoscaled
+   kubectl autoscale deployment udagram-api-feed --cpu-percent=50 --min=1 --max=3
    ```
 #### Outputs
 
