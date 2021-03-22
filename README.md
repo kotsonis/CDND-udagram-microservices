@@ -259,81 +259,9 @@ Deploying the apps and services is achieved by running `kubectl apply -f .\deplo
    ![screenshot](screenshots/kubectl_get_pods.png)
 
 2. verify Kubernetes services are properly set up with `kubectl get services`
-```
-Name:              feed-api
-Namespace:         default
-Labels:            <none>
-Annotations:       <none>
-Selector:          app=udagram-api-feed
-Type:              ClusterIP
-IP:                10.100.41.186
-Port:              <unset>  8080/TCP
-TargetPort:        http/TCP
-Endpoints:         172.31.12.101:8080
-Session Affinity:  None
-Events:            <none>
+   ![screenshot](screenshots/kubectl_describe_services.png)
 
-Name:                     frontend
-Namespace:                default
-Labels:                   service=frontend
-Annotations:              <none>
-Selector:                 service=frontend
-Type:                     LoadBalancer
-IP:                       10.100.169.4
-LoadBalancer Ingress:     a8c2180705acd4cb48b5345a63bc446f-99986180.eu-central-1.elb.amazonaws.com
-Port:                     <unset>  80/TCP
-TargetPort:               80/TCP
-NodePort:                 <unset>  32545/TCP
-Endpoints:                172.31.4.214:80
-Session Affinity:         None
-External Traffic Policy:  Cluster
-Events:                   <none>
-
-Name:              kubernetes
-Namespace:         default
-Labels:            component=apiserver
-                   provider=kubernetes
-Annotations:       <none>
-Selector:          <none>
-Type:              ClusterIP
-IP:                10.100.0.1
-Port:              https  443/TCP
-TargetPort:        443/TCP
-Endpoints:         172.31.18.39:443,172.31.36.255:443
-Session Affinity:  None
-Events:            <none>
-
-Name:                     reverseproxy
-Namespace:                default
-Labels:                   service=reverseproxy-svc
-Annotations:              <none>
-Selector:                 app=udagram-reverseproxy
-Type:                     LoadBalancer
-IP:                       10.100.189.46
-LoadBalancer Ingress:     a24135ce814f64a23b95486e23cd1cd6-75923848.eu-central-1.elb.amazonaws.com
-Port:                     <unset>  8080/TCP
-TargetPort:               8080/TCP
-NodePort:                 <unset>  30747/TCP
-Endpoints:                172.31.7.116:8080
-Session Affinity:         None
-External Traffic Policy:  Cluster
-Events:                   <none>
-
-Name:              users-api
-Namespace:         default
-Labels:            <none>
-Annotations:       <none>
-Selector:          app=udagram-api-users
-Type:              ClusterIP
-IP:                10.100.68.243
-Port:              <unset>  8080/TCP
-TargetPort:        8080/TCP
-Endpoints:         172.31.1.205:8080
-Session Affinity:  None
-Events:            <none>
-
-```
-3. verify that horizontal scaling set against CPU usage with `kubectl get hpa`
+1. verify that horizontal scaling set against CPU usage with `kubectl get hpa`
 ![screenshot](screenshots/kubectl_get_hpa.png)
 
 4. verify that user activity is logged with `kubectl logs -l=app=udagram-api-feed --all-containers=true` or `kubectl logs <pod>`
