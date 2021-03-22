@@ -29,7 +29,15 @@ spec:
         envFrom:
         - secretRef:
             name: udagram-secrets
+        volumeMounts:
+          - name: aws-secret
+            mountPath: "/root/.aws/"
+            readOnly: true  
       restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret
 
 ---
 # Service part

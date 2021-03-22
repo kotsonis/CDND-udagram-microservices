@@ -29,6 +29,9 @@ spec:
             cpu: "500m"       
         ports:
         - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: udagram-secrets
       restartPolicy: Always
 ---
 # Service part

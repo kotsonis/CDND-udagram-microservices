@@ -22,6 +22,10 @@ spec:
         envFrom:
         - secretRef:
             name: udagram-secrets
+        volumeMounts:
+          - name: aws-secret
+            mountPath: "/root/.aws/"
+            readOnly: true  
         imagePullPolicy: Always          
 
         resources:
@@ -30,9 +34,13 @@ spec:
             cpu: "250m"
           limits:
             memory: "1024Mi"
-            cpu: "500m"       
-        
+            cpu: "500m"         
       restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret   
+
 ---
 # Service part
 apiVersion: v1
