@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-reverseproxy
+  labels:
+    service: reverseproxy-svc
+
+spec:
+  selector:
+    matchLabels:
+      app: udagram-reverseproxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: udagram-reverseproxy
+    spec:
+      containers:
+      - name: udagram-reverseproxy
+        image: kamariza/udagram-reverseproxy
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always          
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m" 
+             
+      restartPolicy: Always
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: reverseproxy
+  labels:
+    service: reverseproxy-svc
+spec:
+  selector:
+    app: udagram-reverseproxy
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: LoadBalancer

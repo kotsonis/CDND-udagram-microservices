@@ -1,0 +1,3 @@
+k8s_commands.md
+udagram-api-feed/docker.env.variables
+deployments/k8s/aws-secret.yml

@@ -25,7 +25,7 @@ import {V0_USER_MODELS} from './controllers/v0/model.index';
       'X-Access-Token', 'Authorization',
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    origin: config.dev.url,
+    origin: '*',
   }));
 
   app.use('/api/v0/', IndexRouter);
